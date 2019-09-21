@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import ProjectHeader from './Components/ProjectHeader';
+import WikiSearch from './Components/WikiSearch'
 import ProjectFooter from './Components/ProjectFooter';
-import * as serviceWorker from './serviceWorker';
 
 class WikepediaViewer extends React.Component {
    render() {
@@ -13,7 +13,7 @@ class WikepediaViewer extends React.Component {
             <div className="header">
                <ProjectHeader />
             </div>
-
+            <WikiSearch />
             <div className="footer">
                <ProjectFooter />
             </div>
