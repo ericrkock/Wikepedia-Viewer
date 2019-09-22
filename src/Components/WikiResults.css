@@ -1,0 +1,13 @@
+/* WikiResults CSS */
+
+.result-wrapper {
+   width: 1140px;
+   height: 100%;
+   margin: 15px auto;
+   padding: 10px;
+   background-color: rgba(255,255,255,0.55);
+   border: 1px solid rgba(20, 23, 25, 0.3);
+   border-bottom-right-radius: 20px;
+   border-bottom-left-radius: 20px;
+   box-shadow: 0 13px 40px -13px rgba(20,23,25,0.75);
+}

@@ -1,7 +1,7 @@
 /* PROJECT CSS */
 
 :root {
-   --header: rgb(138, 208, 255);
+   --header: #222;
    --footer: #fff;
    --footerBG: #333;
 }
@@ -29,13 +29,7 @@
    font-family: "Merriweather", serif;
  }
  
- .divide-line-header {
-   margin-top: 25px;
-   width: 35%;
-   background-color: var(--footer);
- }
-
- /* FOOTER */
+  /* FOOTER */
  .footer {
    position: fixed;
    width: 100%;
