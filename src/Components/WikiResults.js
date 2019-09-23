@@ -3,12 +3,23 @@ import './WikiResults.css';
 
 class WikiResults extends React.Component {
    render() {
-      return (
-         <div className="result-wrapper">
-            <p>{this.props.test}</p>
-            <p>Searching for: {this.props.wikisearch}</p>
-         </div>
-      );
+      const { error, wikiItems } = this.props;
+      if (error) {
+         return <div>Error: {error.message}</div>
+      } else {
+
+         return (
+            <div className="result-wrapper">
+               <ul>
+                  {wikiItems.map(item => (
+                     <li key={item} >
+                        {item}
+                     </li>
+                  ))}
+               </ul>
+            </div>
+         );
+      }
    }
 }
 

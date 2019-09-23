@@ -11,30 +11,48 @@ class WikepediaViewer extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         test: undefined,
-         wikisearch: undefined,
+         wikiSearch: "",
          button: "SUBMIT",
-         variant: "outline-dark"
-      }
+         variant: "outline-dark",
+         error: null,
+         isLoaded: false,
+         wikiItems: []
+      };
       this.handleChange = this.handleChange.bind(this);
    }
 
    handleChange(event) {
-      this.setState({wikisearch: event.target.value});
+      this.setState({ wikiSearch: event.target.value });
    }
 
+
+
    search = () => {
-      console.log(this.state.wikisearch);
       if (this.state.button === "SUBMIT") {
          this.setState({
-            test: "Submit Button Clicked",
             button: "RESET",
-            variant: "warning"
+            variant: "warning",
          });
+         fetch("https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=" + this.state.wikiSearch + "&callback=?")
+            .then(res => res.json())
+            .then(
+               (result) => {
+                  console.log("Result:", result);
+                  this.setState({
+                     isLoaded: true,
+                     wikiItems: result
+                  });
+               },
+               (error) => {
+                  this.setState({
+                     isLoaded: true,
+                     error
+                  });
+               }
+            )
       } else {
          this.setState({
-            test: "Reset Button Clicked",
-            wikisearch: "",
+            wikiSearch: "",
             button: "SUBMIT",
             variant: "outline-dark"
          });
@@ -48,16 +66,16 @@ class WikepediaViewer extends React.Component {
                <ProjectHeader />
             </div>
             <div>
-               <WikiSearch 
-                  wikisearch = {this.state.wikisearch}
-                  handleChange = {this.handleChange}
-                  clicked = {this.search}
-                  variant = {this.state.variant}
-                  button = {this.state.button}
+               <WikiSearch
+                  wikiSearch={this.state.wikiSearch}
+                  handleChange={this.handleChange}
+                  clicked={this.search}
+                  variant={this.state.variant}
+                  button={this.state.button}
                />
-               <WikiResults 
-                  test = {this.state.test}
-                  wikisearch = {this.state.wikisearch}
+               <WikiResults
+                  wikiItems={this.state.wikiItems}
+                  error={this.state.error}
                />
             </div>
             <div>
