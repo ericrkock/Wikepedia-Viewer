@@ -15,16 +15,6 @@ class WikepediaViewer extends React.Component {
          wikiSearch: "",
          button: "SEARCH",
          variant: "outline-dark",
-         SearchResult01: "",
-         SearchResult02: "",
-         SearchResult03: "",
-         SearchResult04: "",
-         SearchResult05: "",
-         SearchResult06: "",
-         SearchResult07: "",
-         SearchResult08: "",
-         SearchResult09: "",
-         SearchResult10: "",
          wikiItems: undefined
       };
       this.handleChange = this.handleChange.bind(this);
@@ -35,43 +25,38 @@ class WikepediaViewer extends React.Component {
    }
 
    search = () => {
-      if (this.state.wikiItems != undefined || this.state.wikiSearch != "") {
+      if (this.state.wikiItems !== undefined || this.state.wikiSearch !== "") {
          const keyWord = this.state.wikiSearch;
          const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${keyWord}&callback=?`
          axios.get(url).then((res) => {
-            const data = res.data;
-               if (this.state.button === "SEARCH") {
-                  for (let x = 0; x <= 10; x++) {
-                     this.setState({
-                        SearchResult01: data[3][i]
-                     })
-                  }
+            //const dataLength = res.data.length;
+            //const data = res.data.slice(5, dataLength - 1);
+            const data = res.json();
+            console.log("1-0", data);
+            if (this.state.button === "SEARCH") {
+               console.log("data:", data);
+               for (let x = 0; x <= 10; x++) {
+
+                  this.setState({
+                     wikiItems: data[3][x]
+                  })
+               }
                this.setState({
                   button: "RESET",
-                  variant: "warning",
-                  wikiItems: data
+                  variant: "warning"
+
                });
             } else {
                this.setState({
                   wikiSearch: "",
                   button: "SEARCH",
                   variant: "outline-dark",
-                  SearchResult01: "",
-                  SearchResult02: "",
-                  SearchResult03: "",
-                  SearchResult04: "",
-                  SearchResult05: "",
-                  SearchResult06: "",
-                  SearchResult07: "",
-                  SearchResult08: "",
-                  SearchResult09: "",
-                  SearchResult10: "",
                   wikiItems: undefined
                });
-            };   
+            };
          });
       } else {
-         this.setState({wikiItems: "Enter a Keyword ..."})
+         this.setState({ wikiItems: "Enter a Keyword ..." })
       }
    }
 
@@ -91,7 +76,6 @@ class WikepediaViewer extends React.Component {
                />
                <WikiResults
                   wikiItems={this.state.wikiItems}
-                  error={this.state.error}
                />
             </div>
             <div>
