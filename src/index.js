@@ -15,7 +15,10 @@ class WikepediaViewer extends React.Component {
          wikiSearch: "",
          button: "SEARCH",
          variant: "outline-dark",
-         wikiItems: undefined
+         wikiItems: undefined,
+         wikiTitle: undefined,
+         wikiDescription: undefined,
+         wikiLink: undefined
       };
       this.handleChange = this.handleChange.bind(this);
    }
@@ -25,25 +28,23 @@ class WikepediaViewer extends React.Component {
    }
 
    search = () => {
-      if (this.state.wikiItems !== undefined || this.state.wikiSearch !== "") {
+      if (this.state.wikiItems !== undefined && this.state.wikiSearch !== "") {
          const keyWord = this.state.wikiSearch;
-         const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${keyWord}&callback=?`
+         const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${keyWord}&format=json`
          axios.get(url).then((res) => {
-            //const dataLength = res.data.length;
-            //const data = res.data.slice(5, dataLength - 1);
-            const data = res.json();
-            console.log("1-0", data);
+            const data = res.data;
             if (this.state.button === "SEARCH") {
-               console.log("data:", data);
-               for (let x = 0; x <= 10; x++) {
-
+               for (let x = 0; x < 10; x++) {
                   this.setState({
-                     wikiItems: data[3][x]
+                     wikiTitle: data[1][x],
+                     wikiDescription: data[2][x],
+                     wikiLink: data[3][x]
                   })
                }
                this.setState({
                   button: "RESET",
-                  variant: "warning"
+                  variant: "warning",
+                  wikiItems: undefined
 
                });
             } else {
@@ -51,7 +52,10 @@ class WikepediaViewer extends React.Component {
                   wikiSearch: "",
                   button: "SEARCH",
                   variant: "outline-dark",
-                  wikiItems: undefined
+                  wikiItems: undefined,
+                  wikiTitle: undefined,
+                  wikiDescription: undefined,
+                  wikiLink: undefined
                });
             };
          });
@@ -76,6 +80,9 @@ class WikepediaViewer extends React.Component {
                />
                <WikiResults
                   wikiItems={this.state.wikiItems}
+                  wikiTitle={this.state.wikiTitle}
+                  wikiDescription={this.state.wikiDescription}
+                  wikiLink={this.state.wikiLink}
                />
             </div>
             <div>
