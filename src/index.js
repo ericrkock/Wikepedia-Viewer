@@ -28,7 +28,7 @@ class WikepediaViewer extends React.Component {
    }
 
    search = () => {
-      if (this.state.wikiItems !== undefined && this.state.wikiSearch !== "") {
+      if (this.state.wikiItems !== undefined || this.state.wikiSearch !== "") {
          const keyWord = this.state.wikiSearch;
          const url = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${keyWord}&format=json`
          axios.get(url).then((res) => {
@@ -44,7 +44,7 @@ class WikepediaViewer extends React.Component {
                this.setState({
                   button: "RESET",
                   variant: "warning",
-                  wikiItems: undefined
+                  wikiItems: ""
 
                });
             } else {
