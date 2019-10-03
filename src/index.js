@@ -15,10 +15,7 @@ class WikepediaViewer extends React.Component {
          wikiSearch: "",
          button: "SEARCH",
          variant: "outline-dark",
-         wikiItems: undefined,
-         wikiTitle: undefined,
-         wikiDescription: undefined,
-         wikiLink: undefined
+         content: undefined
       };
       this.handleChange = this.handleChange.bind(this);
    }
@@ -34,28 +31,17 @@ class WikepediaViewer extends React.Component {
          axios.get(url).then((res) => {
             const data = res.data;
             if (this.state.button === "SEARCH") {
-               for (let x = 0; x < 10; x++) {
-                  this.setState({
-                     wikiTitle: data[1][x],
-                     wikiDescription: data[2][x],
-                     wikiLink: data[3][x]
-                  })
-               }
                this.setState({
                   button: "RESET",
                   variant: "warning",
-                  wikiItems: ""
-
+                  content: data
                });
             } else {
                this.setState({
                   wikiSearch: "",
                   button: "SEARCH",
                   variant: "outline-dark",
-                  wikiItems: undefined,
-                  wikiTitle: undefined,
-                  wikiDescription: undefined,
-                  wikiLink: undefined
+                  content: undefined
                });
             };
          });
@@ -79,10 +65,7 @@ class WikepediaViewer extends React.Component {
                   button={this.state.button}
                />
                <WikiResults
-                  wikiItems={this.state.wikiItems}
-                  wikiTitle={this.state.wikiTitle}
-                  wikiDescription={this.state.wikiDescription}
-                  wikiLink={this.state.wikiLink}
+                  content={this.state.content}
                />
             </div>
             <div>
